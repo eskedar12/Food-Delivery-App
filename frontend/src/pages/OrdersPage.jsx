@@ -15,10 +15,13 @@ export function OrdersPage() {
     const fetchOrders = async () => {
       try {
         setLoading(true);
+        console.log("Fetching orders...");
         const data = await api.getMyOrders();
-        setOrders(data);
+        console.log("Orders received:", data);
+        setOrders(data || []);
       } catch (error) {
         console.error("Error fetching orders:", error);
+        setOrders([]);
       } finally {
         setLoading(false);
       }
@@ -26,6 +29,8 @@ export function OrdersPage() {
 
     if (user) {
       fetchOrders();
+    } else {
+      setLoading(false);
     }
   }, [user]);
 
@@ -51,7 +56,7 @@ export function OrdersPage() {
       case "delivered":
         return "Delivered";
       default:
-        return status;
+        return status || "Pending";
     }
   };
 
@@ -63,7 +68,7 @@ export function OrdersPage() {
     );
   }
 
-  if (orders.length === 0) {
+  if (!orders || orders.length === 0) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-16 text-center">
         <Package className="w-16 h-16 mx-auto text-gray-400 mb-4" />
@@ -82,13 +87,13 @@ export function OrdersPage() {
       
       <div className="space-y-6">
         {orders.map((order) => (
-          <Card key={order._id}>
+          <Card key={order._id || order.id}>
             <CardHeader>
               <div className="flex justify-between items-start">
                 <div>
-                  <CardTitle className="text-lg">Order #{order._id?.slice(-6) || order.id?.slice(-6)}</CardTitle>
+                  <CardTitle className="text-lg">Order #{order._id?.slice(-6) || order.id?.slice(-6) || 'N/A'}</CardTitle>
                   <p className="text-sm text-gray-500">
-                    {new Date(order.createdAt).toLocaleDateString()} at {new Date(order.createdAt).toLocaleTimeString()}
+                    {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : 'Unknown date'} at {order.createdAt ? new Date(order.createdAt).toLocaleTimeString() : ''}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -99,7 +104,7 @@ export function OrdersPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {order.items.map((item, index) => (
+                {order.items && order.items.map((item, index) => (
                   <div key={index} className="flex justify-between text-sm">
                     <span>
                       {item.name} × {item.quantity}
@@ -110,15 +115,15 @@ export function OrdersPage() {
                 <div className="border-t pt-3 mt-3">
                   <div className="flex justify-between font-bold">
                     <span>Total Paid</span>
-                    <span className="text-clay">{order.grandTotal || order.total} ETB</span>
+                    <span className="text-clay">{order.grandTotal || order.total || 0} ETB</span>
                   </div>
                 </div>
                 <div className="bg-gray-50 p-3 rounded-lg mt-3">
                   <p className="text-sm text-gray-600">
-                    <strong>Delivery Address:</strong> {order.deliveryDetails?.address}
+                    <strong>Delivery Address:</strong> {order.deliveryDetails?.address || 'Not provided'}
                   </p>
                   <p className="text-sm text-gray-600 mt-1">
-                    <strong>Phone:</strong> {order.deliveryDetails?.phone}
+                    <strong>Phone:</strong> {order.deliveryDetails?.phone || 'Not provided'}
                   </p>
                   {order.deliveryDetails?.notes && (
                     <p className="text-sm text-gray-600 mt-1">

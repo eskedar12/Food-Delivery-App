@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ShoppingBag, Menu, X, Search, User, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { useCart } from "../lib/CartContext.jsx";
@@ -142,16 +142,16 @@ export function Navbar() {
                 My Orders
               </Button>
             </button>
-            <button onClick={() => handleNavigation("/profile")} className="flex items-center gap-2">
-              <Button variant="ghost" size="icon">
-                <User className="h-5 w-5" />
-              </Button>
-              {user && (
-                <span className="text-sm text-gray-700 hidden lg:inline">
-                  {user.name?.split(" ")[0]}
-                </span>
-              )}
-            </button>
+            <Link to="/profile" className="flex items-center gap-2">
+  <Button variant="ghost" size="icon">
+    <User className="h-5 w-5" />
+  </Button>
+  {user && (
+    <span className="text-sm text-gray-700 hidden lg:inline">
+      {user.name?.split(" ")[0]}
+    </span>
+  )}
+</Link>
           </div>
 
           {/* Mobile menu button */}
