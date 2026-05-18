@@ -1,5 +1,5 @@
-// API base URL
-const API_URL = 'http://localhost:5000/api';
+// API base URL - uses live backend on Render, or localhost for development
+const API_URL = import.meta.env.VITE_API_URL || 'https://food-delivery-api-am5l.onrender.com/api';
 
 // Helper function for fetch requests
 async function fetchData(endpoint, options = {}) {
