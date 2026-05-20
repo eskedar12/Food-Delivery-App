@@ -14,8 +14,12 @@ connectDB();
 
 const app = express();
 
+// CORS - Allow both localhost and your live frontend URL
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://food-delivery-app-4lpt.onrender.com'],
+  origin: [
+    'http://localhost:5173',
+    'https://food-delivery-app-qfcw.onrender.com'  // YOUR ACTUAL FRONTEND URL
+  ],
   credentials: true,
 }));
 
@@ -27,8 +31,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/foods', foodRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/restaurants', restaurantRoutes);
-app.use('/api/users', userRoutes);      // NEW - User management
-app.use('/api/admin', adminRoutes);     // NEW - Admin statistics
+app.use('/api/users', userRoutes);
+app.use('/api/admin', adminRoutes);
 
 app.get('/', (req, res) => {
   res.json({ message: 'Dire Foods API is running 🚀' });
