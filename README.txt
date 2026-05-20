@@ -1,36 +1,42 @@
-========================================
-    DIRE FOODS - FOOD DELIVERY APP
-========================================
+# 🍽️ Dire Foods - Food Delivery Platform
 
-REQUIREMENTS:
------------------------------------
-1. Node.js: https://nodejs.org/
-2. MongoDB: https://www.mongodb.com/try/download/community
+A full-stack food delivery application connecting customers with multiple restaurants in Dire Dawa, Ethiopia. Features user authentication, restaurant management, menu browsing, cart functionality, order placement, and an admin dashboard for the delivery company.
 
-HOW TO RUN:
------------------------------------
-1. Extract the ZIP file
+## 🌐 Live Demo
 
-2. Open Command Prompt in the Dire_foods folder
+**Frontend:** https://food-delivery-app-qfcw.onrender.com
 
-3. Run these commands:
+## ✨ Features
 
-   cd backend
-   npm install
-   cd ..
-   cd frontend
-   npm install
-   cd ..
+### 👤 Customer Side
+- Browse foods by category (Traditional, Modern, Drinks)
+- Search and filter by restaurant
+- Add items to cart
+- Place orders with delivery details
+- View order history
+- User registration and login
 
-4. Double-click "start.bat"
+### 👑 Admin Side (Delivery Company)
+- Dashboard with real-time statistics (orders, revenue, users)
+- Restaurant management (add, edit, delete)
+- Menu management (add, edit, delete food items)
+- Order management (view all orders, update status)
+- Driver management
 
-5. Open browser to: http://localhost:5173
+## 🛠️ Tech Stack
 
-TEST ACCOUNT:
------------------------------------
-Email: test@direfoods.com
-Password: test123
+### Frontend
+- **React 19** with Vite
+- **React Router DOM** for navigation
+- **Tailwind CSS** for styling
+- **Lucide React** for icons
 
-Or click "Sign Up" to create your own account!
+### Backend
+- **Node.js** with Express
+- **MongoDB** with Mongoose ODM
+- **JWT** for authentication
+- **Multer** for image uploads
 
-========================================
+### Deployment
+- **Render** (frontend + backend)
+- **MongoDB Atlas** (cloud database)
