@@ -34,9 +34,10 @@ export default function MenuManagement() {
   }, []);
 
   const fetchFoods = async () => {
+    setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/api/foods", {
+      const res = await fetch("https://food-delivery-api-am5l.onrender.com/api/foods", {
         headers: { "x-auth-token": token }
       });
       const data = await res.json();
@@ -52,7 +53,7 @@ export default function MenuManagement() {
   const fetchRestaurants = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/api/restaurants", {
+      const res = await fetch("https://food-delivery-api-am5l.onrender.com/api/restaurants", {
         headers: { "x-auth-token": token }
       });
       const data = await res.json();
@@ -99,7 +100,7 @@ export default function MenuManagement() {
         formData.append("image", selectedImage);
       }
       
-      const response = await fetch("http://localhost:5000/api/foods", {
+      const response = await fetch("https://food-delivery-api-am5l.onrender.com/api/foods", {
         method: "POST",
         headers: {
           "x-auth-token": token
@@ -128,7 +129,7 @@ export default function MenuManagement() {
   const deleteFood = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:5000/api/foods/${id}`, {
+      const res = await fetch(`https://food-delivery-api-am5l.onrender.com/api/foods/${id}`, {
         method: "DELETE",
         headers: { "x-auth-token": token }
       });

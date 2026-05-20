@@ -32,26 +32,31 @@ export default function CompanyDashboard() {
     try {
       const token = localStorage.getItem("token");
       
-      const restaurantsRes = await fetch("http://localhost:5000/api/restaurants", {
+      // Get stats from admin API
+      const statsRes = await fetch("https://food-delivery-api-am5l.onrender.com/api/admin/stats", {
         headers: { "x-auth-token": token }
       });
-      const restaurants = await restaurantsRes.json();
+      const statsData = await statsRes.json();
       
-      const foodsRes = await fetch("http://localhost:5000/api/foods", {
+      // Get foods
+      const foodsRes = await fetch("https://food-delivery-api-am5l.onrender.com/api/foods", {
         headers: { "x-auth-token": token }
       });
       const foods = await foodsRes.json();
       
-      const ordersRes = await fetch("http://localhost:5000/api/orders", {
+      // Get orders
+      const ordersRes = await fetch("https://food-delivery-api-am5l.onrender.com/api/orders", {
         headers: { "x-auth-token": token }
       });
       const orders = await ordersRes.json();
       
-      const usersRes = await fetch("http://localhost:5000/api/users", {
+      // Get users
+      const usersRes = await fetch("https://food-delivery-api-am5l.onrender.com/api/users", {
         headers: { "x-auth-token": token }
       });
       const users = await usersRes.json();
       
+      // Calculate revenue
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       const todayOrders = orders.filter(o => new Date(o.createdAt) >= today);
@@ -59,7 +64,7 @@ export default function CompanyDashboard() {
       const totalRevenue = orders.reduce((sum, o) => sum + (o.grandTotal || 0), 0);
       
       setStats({
-        totalRestaurants: restaurants.length,
+        totalRestaurants: statsData.totalRestaurants || 0,
         totalFoods: foods.length,
         totalOrders: orders.length,
         pendingOrders: orders.filter(o => o.status === "pending").length,

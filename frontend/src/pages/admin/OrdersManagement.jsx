@@ -24,7 +24,7 @@ export default function OrdersManagement() {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/api/orders", {
+      const res = await fetch("https://food-delivery-api-am5l.onrender.com/api/orders", {
         headers: { "x-auth-token": token }
       });
       const data = await res.json();
@@ -40,7 +40,7 @@ export default function OrdersManagement() {
   const updateStatus = async (orderId, newStatus) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:5000/api/orders/${orderId}/status`, {
+      const res = await fetch(`https://food-delivery-api-am5l.onrender.com/api/orders/${orderId}/status`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
