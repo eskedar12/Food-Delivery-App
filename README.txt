@@ -2,8 +2,7 @@
 
 A full-stack food delivery application connecting customers with multiple restaurants in Dire Dawa, Ethiopia. Features user authentication, restaurant management, menu browsing, cart functionality, order placement, and an admin dashboard for the delivery company.
 
-## 🌐 Live Demo
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Click_Here-green)](https://food-delivery-app-qfcw.onrender.com)
+[🔗 **Click here to view live demo**](https://food-delivery-app-qfcw.onrender.com)
 
 ## ✨ Features
 
