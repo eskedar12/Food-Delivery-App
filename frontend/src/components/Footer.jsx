@@ -5,7 +5,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="font-serif text-2xl font-bold mb-4">
-              <span className="text-clay">TAFACH</span>
+              <span className="text-clay">DIRE</span>
               <span className="text-forest"> FOODS</span>
             </h3>
             <p className="text-gray-400 text-sm">
@@ -40,7 +40,7 @@ export function Footer() {
         </div>
         
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-          © {new Date().getFullYear()} Tafach Foods. Built for the pride of Dire Dawa.
+          © {new Date().getFullYear()} Dire Foods. Built for the pride of Dire Dawa.
         </div>
       </div>
     </footer>

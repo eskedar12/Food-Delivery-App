@@ -1,16 +1,60 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useCart } from "../lib/CartContext.jsx";
+import { useAuth } from "../lib/AuthContext.jsx";
 import { Button } from "../components/ui/Button.jsx";
-import { sampleFoods } from "../lib/sampleData.js";
 import { ArrowLeft, Star, Clock, Store } from "lucide-react";
 import { toast } from "sonner";
+import { api } from "../lib/api.js";
 
 export function FoodDetailPage() {
   const { foodId } = useParams();
   const navigate = useNavigate();
   const { addItem } = useCart();
-  
-  const food = sampleFoods.find(f => f.id === foodId);
+  const { user } = useAuth();
+  const [food, setFood] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchFood();
+  }, [foodId]);
+
+  const fetchFood = async () => {
+    try {
+      const data = await api.getFood(foodId);
+      setFood(data);
+    } catch (error) {
+      console.error("Error fetching food:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddToCart = () => {
+    if (!user) {
+      toast.error("Please login first to add items to cart");
+      navigate("/login");
+      return;
+    }
+    
+    addItem({
+      id: food._id,
+      name: food.name,
+      price: food.price,
+      quantity: 1,
+      image: food.image,
+      restaurant: food.restaurant,
+    });
+    toast.success(`${food.name} added to cart!`);
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-clay"></div>
+      </div>
+    );
+  }
 
   if (!food) {
     return (
@@ -20,18 +64,6 @@ export function FoodDetailPage() {
       </div>
     );
   }
-
-  const handleAddToCart = () => {
-    addItem({
-      id: food.id,
-      name: food.name,
-      price: food.price,
-      quantity: 1,
-      image: food.image,
-      restaurant: food.restaurant,
-    });
-    toast.success(`${food.name} added to cart!`);
-  };
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">

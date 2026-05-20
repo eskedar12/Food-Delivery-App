@@ -8,12 +8,15 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in from localStorage
     const token = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
     
     if (token && storedUser) {
-      setUser(JSON.parse(storedUser));
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (e) {
+        console.error("Failed to parse user:", e);
+      }
     }
     setLoading(false);
   }, []);
@@ -21,13 +24,10 @@ export function AuthProvider({ children }) {
   const signup = async (email, password, name, phone) => {
     try {
       const data = await api.register({ name, email, phone, password });
-      
-      // Save to localStorage
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-      
       setUser(data.user);
-      return true;
+      return data.user;
     } catch (error) {
       console.error("Signup error:", error);
       throw new Error(error.message || "Signup failed");
@@ -37,13 +37,10 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     try {
       const data = await api.login({ email, password });
-      
-      // Save to localStorage
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-      
       setUser(data.user);
-      return true;
+      return data.user;
     } catch (error) {
       console.error("Login error:", error);
       throw new Error(error.message || "Login failed");
@@ -79,10 +76,10 @@ export function AuthProvider({ children }) {
   );
 }
 
-export function useAuth() {
+export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
-}
+};

@@ -6,6 +6,8 @@ import authRoutes from './routes/auth.js';
 import foodRoutes from './routes/foods.js';
 import orderRoutes from './routes/orders.js';
 import restaurantRoutes from './routes/restaurants.js';
+import userRoutes from './routes/users.js';
+import adminRoutes from './routes/admin.js';
 
 dotenv.config();
 connectDB();
@@ -18,11 +20,15 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
+// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/foods', foodRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/restaurants', restaurantRoutes);
+app.use('/api/users', userRoutes);      // NEW - User management
+app.use('/api/admin', adminRoutes);     // NEW - Admin statistics
 
 app.get('/', (req, res) => {
   res.json({ message: 'Dire Foods API is running 🚀' });

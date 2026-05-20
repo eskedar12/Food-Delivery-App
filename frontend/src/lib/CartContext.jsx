@@ -1,16 +1,36 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useAuth } from "./AuthContext.jsx";
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [items, setItems] = useState(() => {
-    const saved = localStorage.getItem("cart");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const { user } = useAuth();
+  const [items, setItems] = useState([]);
 
+  // Load cart when user changes (login/logout)
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(items));
-  }, [items]);
+    if (user) {
+      // User logged in - load their cart from localStorage
+      const savedCart = localStorage.getItem(`cart_${user.id}`);
+      if (savedCart) {
+        setItems(JSON.parse(savedCart));
+      } else {
+        setItems([]);
+      }
+    } else {
+      // User logged out - clear cart
+      setItems([]);
+    }
+  }, [user]);
+
+  // Save cart whenever items change AND user is logged in
+  useEffect(() => {
+    if (user && items.length > 0) {
+      localStorage.setItem(`cart_${user.id}`, JSON.stringify(items));
+    } else if (user && items.length === 0) {
+      localStorage.removeItem(`cart_${user.id}`);
+    }
+  }, [items, user]);
 
   const addItem = (newItem) => {
     setItems((prev) => {

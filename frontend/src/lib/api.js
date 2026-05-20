@@ -1,7 +1,7 @@
-// API base URL - uses live backend on Render, or localhost for development
-const API_URL = import.meta.env.VITE_API_URL || 'https://food-delivery-api-am5l.onrender.com/api';
+const API_URL = import.meta.env.PROD 
+  ? 'https://food-delivery-api-am5l.onrender.com/api'
+  : 'http://localhost:5000/api';
 
-// Helper function for fetch requests
 async function fetchData(endpoint, options = {}) {
   const token = localStorage.getItem('token');
   
@@ -28,9 +28,7 @@ async function fetchData(endpoint, options = {}) {
   return data;
 }
 
-// API methods
 export const api = {
-  // Foods
   getFoods: (params = {}) => {
     const queryString = new URLSearchParams(params).toString();
     return fetchData(`/foods${queryString ? `?${queryString}` : ''}`);
@@ -38,7 +36,6 @@ export const api = {
   
   getFood: (id) => fetchData(`/foods/${id}`),
   
-  // Auth
   register: (userData) => fetchData('/auth/register', {
     method: 'POST',
     body: JSON.stringify(userData),
@@ -51,7 +48,6 @@ export const api = {
   
   getCurrentUser: () => fetchData('/auth/me'),
   
-  // Orders
   createOrder: (orderData) => fetchData('/orders', {
     method: 'POST',
     body: JSON.stringify(orderData),
@@ -59,6 +55,5 @@ export const api = {
   
   getMyOrders: () => fetchData('/orders/my-orders'),
   
-  // Restaurants
   getRestaurants: () => fetchData('/restaurants'),
 };

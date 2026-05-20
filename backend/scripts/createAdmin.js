@@ -19,7 +19,7 @@ async function createAdmin() {
     const existingAdmin = await User.findOne({ email: 'admin@direfoods.com' });
     if (existingAdmin) {
       console.log('⚠️ Admin user already exists!');
-      console.log('📧 Email: admin@direfoods.com');
+      console.log('📧 Email: admin@dire.com');
       process.exit(0);
     }
 
@@ -27,7 +27,7 @@ async function createAdmin() {
     const hashedPassword = await bcrypt.hash('admin123', 10);
     const admin = new User({
       name: 'Admin User',
-      email: 'admin@direfoods.com',
+      email: 'admin@dire.com',
       phone: '0912345678',
       address: 'Dire Dawa, Ethiopia',
       password: hashedPassword,

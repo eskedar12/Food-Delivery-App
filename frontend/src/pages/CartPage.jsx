@@ -1,5 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useCart } from "../lib/CartContext.jsx";
+import { useAuth } from "../lib/AuthContext.jsx";
 import { Button } from "../components/ui/Button.jsx";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/Card.jsx";
 import { Trash2, Minus, Plus, ShoppingBag, Store } from "lucide-react";
@@ -7,6 +9,21 @@ import { toast } from "sonner";
 
 export function CartPage() {
   const { items, updateQuantity, removeItem, clearCart, totalItems, totalPrice } = useCart();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  // Check if user is logged in
+  useEffect(() => {
+    if (!user) {
+      toast.error("Please login to view your cart");
+      navigate("/login");
+    }
+  }, [user, navigate]);
+
+  // Show loading or redirect while checking
+  if (!user) {
+    return null;
+  }
 
   if (items.length === 0) {
     return (

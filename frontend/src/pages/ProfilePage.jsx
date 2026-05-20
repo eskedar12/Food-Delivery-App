@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../lib/AuthContext.jsx";
 import { Button } from "../components/ui/Button.jsx";
@@ -15,8 +15,13 @@ export function ProfilePage() {
   const [phone, setPhone] = useState(user?.phone || "");
   const [address, setAddress] = useState(user?.address || "");
 
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
+
   if (!user) {
-    navigate("/login");
     return null;
   }
 
@@ -37,7 +42,6 @@ export function ProfilePage() {
       <h1 className="text-3xl font-serif font-bold text-clay mb-8">My Profile</h1>
       
       <div className="grid md:grid-cols-3 gap-6">
-        {/* Profile Card */}
         <div className="md:col-span-1">
           <Card>
             <CardContent className="pt-6">
@@ -48,18 +52,11 @@ export function ProfilePage() {
                 <h2 className="text-xl font-bold">{user.name || "User"}</h2>
                 <p className="text-gray-500 text-sm">{user.email}</p>
                 <div className="mt-6 space-y-2">
-                  <button
-                    onClick={() => setIsEditing(!isEditing)}
-                    className="w-full text-clay hover:underline text-sm"
-                  >
+                  <button onClick={() => setIsEditing(!isEditing)} className="w-full text-clay hover:underline text-sm">
                     {isEditing ? "Cancel Editing" : "Edit Profile"}
                   </button>
-                  <button
-                    onClick={handleLogout}
-                    className="w-full flex items-center justify-center gap-2 text-red-600 hover:text-red-700 text-sm"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    Logout
+                  <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 text-red-600 hover:text-red-700 text-sm">
+                    <LogOut className="w-4 h-4" /> Logout
                   </button>
                 </div>
               </div>
@@ -67,7 +64,6 @@ export function ProfilePage() {
           </Card>
         </div>
 
-        {/* Profile Details */}
         <div className="md:col-span-2">
           <Card>
             <CardHeader>
@@ -76,23 +72,17 @@ export function ProfilePage() {
             <CardContent className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Mail className="w-4 h-4 inline mr-2" />
-                  Email Address
+                  <Mail className="w-4 h-4 inline mr-2" /> Email Address
                 </label>
                 <p className="text-gray-900 bg-gray-50 p-2 rounded">{user.email}</p>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <User className="w-4 h-4 inline mr-2" />
-                  Full Name
+                  <User className="w-4 h-4 inline mr-2" /> Full Name
                 </label>
                 {isEditing ? (
-                  <Input
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Your name"
-                  />
+                  <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" />
                 ) : (
                   <p className="text-gray-900 bg-gray-50 p-2 rounded">{name || "Not provided"}</p>
                 )}
@@ -100,15 +90,10 @@ export function ProfilePage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Phone className="w-4 h-4 inline mr-2" />
-                  Phone Number
+                  <Phone className="w-4 h-4 inline mr-2" /> Phone Number
                 </label>
                 {isEditing ? (
-                  <Input
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Your phone number"
-                  />
+                  <Input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Your phone number" />
                 ) : (
                   <p className="text-gray-900 bg-gray-50 p-2 rounded">{phone || "Not provided"}</p>
                 )}
@@ -116,15 +101,10 @@ export function ProfilePage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <MapPin className="w-4 h-4 inline mr-2" />
-                  Delivery Address
+                  <MapPin className="w-4 h-4 inline mr-2" /> Delivery Address
                 </label>
                 {isEditing ? (
-                  <Input
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    placeholder="Your delivery address"
-                  />
+                  <Input value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Your delivery address" />
                 ) : (
                   <p className="text-gray-900 bg-gray-50 p-2 rounded">{address || "Not provided"}</p>
                 )}

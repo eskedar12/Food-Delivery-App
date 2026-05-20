@@ -13,6 +13,12 @@ import { OrdersPage } from "./pages/OrdersPage.jsx";
 import { SearchPage } from "./pages/SearchPage.jsx";
 import { ProfilePage } from "./pages/ProfilePage.jsx";
 import { AuthPage } from "./pages/AuthPage.jsx";
+// Admin pages
+import CompanyDashboard from "./pages/admin/CompanyDashboard.jsx";
+import Restaurants from "./pages/admin/Restaurants.jsx";
+import MenuManagement from "./pages/admin/MenuManagement.jsx";
+import OrdersManagement from "./pages/admin/OrdersManagement.jsx";
+import DriversManagement from "./pages/admin/DriversManagement.jsx";
 
 function App() {
   return (
@@ -23,6 +29,7 @@ function App() {
             <Navbar />
             <main className="flex-1">
               <Routes>
+                {/* Customer Routes */}
                 <Route path="/" element={<HomePage />} />
                 <Route path="/foods" element={<FoodsPage />} />
                 <Route path="/food/:foodId" element={<FoodDetailPage />} />
@@ -32,6 +39,13 @@ function App() {
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/login" element={<AuthPage />} />
+                
+                {/* Company Admin Routes */}
+                <Route path="/admin/dashboard" element={<CompanyDashboard />} />
+                <Route path="/admin/restaurants" element={<Restaurants />} />
+                <Route path="/admin/menu" element={<MenuManagement />} />
+                <Route path="/admin/orders" element={<OrdersManagement />} />
+                <Route path="/admin/drivers" element={<DriversManagement />} />
               </Routes>
             </main>
             <Footer />

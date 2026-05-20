@@ -23,9 +23,19 @@ export function AuthPage() {
 
     try {
       if (isLogin) {
-        await login(email, password);
+        const user = await login(email, password);
         toast.success("Login successful!");
-        navigate("/");
+        
+        // Redirect based on role
+        if (user.role === "driver") {
+          navigate("/driver/dashboard");
+        } else if (user.role === "admin") {
+          navigate("/admin/dashboard");
+        } else if (user.role === "restaurant_owner") {
+          navigate("/restaurant/dashboard");
+        } else {
+          navigate("/");
+        }
       } else {
         if (!name || !email || !phone) {
           toast.error("Please fill in all fields");
@@ -59,69 +69,30 @@ export function AuthPage() {
             {!isLogin && (
               <>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Full Name
-                  </label>
-                  <Input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Enter your name"
-                    required
-                  />
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                  <Input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter your name" required />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone Number
-                  </label>
-                  <Input
-                    type="tel"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Enter your phone number"
-                    required
-                  />
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                  <Input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Enter your phone number" required />
                 </div>
               </>
             )}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
-              </label>
-              <Input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                required
-              />
+              <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+              <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Password
-              </label>
-              <Input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                required
-              />
+              <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+              <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" required />
             </div>
-            <Button
-              type="submit"
-              className="w-full bg-clay hover:bg-clay/90"
-              disabled={loading}
-            >
+            <Button type="submit" className="w-full bg-clay hover:bg-clay/90" disabled={loading}>
               {loading ? "Please wait..." : (isLogin ? "Login" : "Sign Up")}
             </Button>
           </form>
 
           <div className="mt-6 text-center">
-            <button
-              onClick={() => setIsLogin(!isLogin)}
-              className="text-clay hover:underline"
-            >
+            <button onClick={() => setIsLogin(!isLogin)} className="text-clay hover:underline">
               {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Login"}
             </button>
           </div>

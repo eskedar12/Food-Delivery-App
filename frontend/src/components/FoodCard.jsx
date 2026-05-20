@@ -1,17 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Plus, Star, Store } from "lucide-react";
 import { useCart } from "../lib/CartContext.jsx";
 import { Button } from "./ui/Button.jsx";
 import { Badge } from "./ui/Badge.jsx";
 import { Card, CardContent } from "./ui/Card.jsx";
 import { toast } from "sonner";
+import { useAuth } from "../lib/AuthContext.jsx";
 
 export function FoodCard({ food }) {
   const { addItem } = useCart();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const handleAddToCart = () => {
+    // Check if user is logged in
+    if (!user) {
+      toast.error("Please login first to add items to cart");
+      navigate("/login");
+      return;
+    }
+    
     addItem({
-      id: food.id,
+      id: food._id || food.id,  // Use _id from MongoDB, fallback to id
       name: food.name,
       price: food.price,
       quantity: 1,
@@ -23,7 +33,7 @@ export function FoodCard({ food }) {
 
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-      <Link to={`/food/${food.id}`}>
+      <Link to={`/food/${food._id || food.id}`}>
         <div className="aspect-video overflow-hidden">
           <img
             src={food.image}
@@ -34,7 +44,7 @@ export function FoodCard({ food }) {
       </Link>
       <CardContent className="p-4">
         <div className="flex justify-between items-start mb-2">
-          <Link to={`/food/${food.id}`}>
+          <Link to={`/food/${food._id || food.id}`}>
             <h3 className="font-semibold text-lg hover:text-clay transition-colors">
               {food.name}
             </h3>
