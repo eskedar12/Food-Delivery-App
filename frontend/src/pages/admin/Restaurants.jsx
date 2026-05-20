@@ -18,15 +18,17 @@ export default function Restaurants() {
     return <Navigate to="/" />;
   }
 
- useEffect(() => {
-  fetchRestaurants();
-}, []);
+  useEffect(() => {
+    fetchRestaurants();
+  }, []);
 
-const fetchRestaurants = async () => {
-  const token = localStorage.getItem("token");
-  const res = await fetch("https://food-delivery-api-am5l.onrender.com/api/restaurants", {
-    headers: { "x-auth-token": token }
-  });
+  const fetchRestaurants = async () => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch("https://food-delivery-api-am5l.onrender.com/api/restaurants", {
+        headers: { "x-auth-token": token }
+      });
       const data = await res.json();
       setRestaurants(data);
     } catch (error) {
@@ -45,7 +47,7 @@ const fetchRestaurants = async () => {
     
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/api/restaurants", {
+      const res = await fetch("https://food-delivery-api-am5l.onrender.com/api/restaurants", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,7 +78,7 @@ const fetchRestaurants = async () => {
   const deleteRestaurant = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:5000/api/restaurants/${id}`, {
+      const res = await fetch(`https://food-delivery-api-am5l.onrender.com/api/restaurants/${id}`, {
         method: "DELETE",
         headers: { "x-auth-token": token }
       });
