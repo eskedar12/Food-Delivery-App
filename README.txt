@@ -1,7 +1,7 @@
 # 🍽️ Dire Foods - Food Delivery Platform
 
 A full-stack food delivery application connecting customers with multiple restaurants in Dire Dawa, Ethiopia. Features user authentication, restaurant management, menu browsing, cart functionality, order placement, and an admin dashboard for the delivery company.
-**[Live demo:](https://job-tracker-web-ych8.onrender.com)** 
+[Live demo:](https://job-tracker-web-ych8.onrender.com)
 
 ## ✨ Features
 
