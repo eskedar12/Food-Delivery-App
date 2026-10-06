@@ -18,7 +18,6 @@ Live demo: https://food-delivery-app-qfcw.onrender.com/
 - Restaurant management (add, edit, delete)
 - Menu management (add, edit, delete food items)
 - Order management (view all orders, update status)
-- Driver management
 
 ## 🛠️ Tech Stack
 
