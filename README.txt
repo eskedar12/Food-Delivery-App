@@ -1,11 +1,11 @@
-# 🍽️ Dire Foods - Food Delivery Platform
+#  Dire Foods - Food Delivery Platform
 
 A full-stack food delivery application connecting customers with multiple restaurants in Dire Dawa, Ethiopia. Features user authentication, restaurant management, menu browsing, cart functionality, order placement, and an admin dashboard for the delivery company.
 Live demo: https://food-delivery-app-qfcw.onrender.com/
 
 
 
-### 👤 Customer Side
+### Customer Side
 - Browse foods by category (Traditional, Modern, Drinks)
 - Search and filter by restaurant
 - Add items to cart
@@ -13,13 +13,13 @@ Live demo: https://food-delivery-app-qfcw.onrender.com/
 - View order history
 - User registration and login
 
-### 👑 Admin Side (Delivery Company)
+###  Admin Side (Delivery Company)
 - Dashboard with real-time statistics (orders, revenue, users)
 - Restaurant management (add, edit, delete)
 - Menu management (add, edit, delete food items)
 - Order management (view all orders, update status)
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Frontend
 - **React 19** with Vite
