@@ -4,7 +4,6 @@ A full-stack food delivery application connecting customers with multiple restau
 Live demo: https://food-delivery-app-qfcw.onrender.com/
 
 
-
 ### Customer Side
 - Browse foods by category (Traditional, Modern, Drinks)
 - Search and filter by restaurant
